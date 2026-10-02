@@ -149,7 +149,7 @@ predictions and security alerts.
 
 ------------------------------------------------------------------------
 
-# 6. Dataset --- NSL-KDD
+# 6. Dataset : NSL-KDD
 
 The project uses the **NSL-KDD** dataset, a widely used dataset for
 educational experiments in network intrusion detection.
