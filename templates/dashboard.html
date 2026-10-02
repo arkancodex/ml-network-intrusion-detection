@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f8fc">
+    <title>AI-NIDS — Network Intrusion Detection System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+<div class="app-bg">
+    <div class="bg-grid"></div>
+    <div class="bg-orb orb-blue"></div>
+    <div class="bg-orb orb-cyan"></div>
+    <div class="bg-orb orb-purple"></div>
+</div>
+
+<main class="dashboard">
+
+    <!-- TOP BAR -->
+    <header class="topbar glass">
+        <div class="brand">
+            <div class="brand-mark"><span>ϟ</span></div>
+            <div>
+                <div class="brand-name">AI-NIDS</div>
+                <div class="brand-sub">Network Intrusion Detection System</div>
+            </div>
+        </div>
+
+        <div class="topbar-center">
+            <div class="system-status" id="status-pill">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">MONITORING LIVE</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="action-btn start-btn" id="btn-start" type="button">
+                <span class="btn-icon">▶</span><span>Start</span>
+            </button>
+            <button class="action-btn stop-btn" id="btn-stop" type="button">
+                <span class="btn-icon">■</span><span>Stop</span>
+            </button>
+            <button class="action-btn reset-btn" id="btn-clear" type="button">
+                <span class="btn-icon">↻</span><span>Reset</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-copy">
+            <div class="eyebrow"><span></span>REAL-TIME NETWORK SECURITY</div>
+            <h1>Network Intrusion <span>Detection System</span></h1>
+            <p>Real-time network traffic monitoring and classification using Machine Learning <strong>(Random Forest)</strong>.</p>
+            <div class="hero-tags">
+                <span>NSL-KDD</span>
+                <span>RANDOM FOREST</span>
+                <span>FLASK</span>
+                <span>ML CLASSIFICATION</span>
+            </div>
+        </div>
+
+        <!-- Fully live browser date/time -->
+        <div class="datetime-card glass">
+            <div class="datetime-icon">◷</div>
+            <div>
+                <div class="date-label" id="current-date">--</div>
+                <strong id="current-time">--:--:--</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- KPI CARDS: values are populated by dashboard.js -->
+    <section class="stats-grid">
+
+        <article class="stat-card blue">
+            <div class="stat-top">
+                <div class="metric-icon">▣</div>
+                <span>RECORDS ANALYZED</span>
+            </div>
+            <div class="stat-value-row">
+                <strong id="stat-total">0</strong>
+                <div class="mini-chart blue-chart" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+            </div>
+            <div class="stat-bottom"><span>NETWORK RECORDS</span><b>LIVE</b></div>
+        </article>
+
+        <article class="stat-card red">
+            <div class="stat-top">
+                <div class="metric-icon">!</div>
+                <span>ALERTS RAISED</span>
+            </div>
+            <div class="stat-value-row">
+                <strong id="stat-alerts">0</strong>
+                <div class="mini-chart red-chart" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+            </div>
+            <div class="stat-bottom"><span>MALICIOUS TRAFFIC</span><b>ALERT</b></div>
+        </article>
+
+        <article class="stat-card green">
+            <div class="stat-top">
+                <div class="metric-icon">✓</div>
+                <span>NORMAL TRAFFIC</span>
+            </div>
+            <div class="stat-value-row">
+                <strong id="stat-normal">0</strong>
+                <div class="mini-chart green-chart" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+            </div>
+            <div class="stat-bottom"><span>SAFE ACTIVITY</span><b>SAFE</b></div>
+        </article>
+
+        <article class="stat-card purple">
+            <div class="stat-top">
+                <div class="metric-icon">▥</div>
+                <span>DETECTION RATE</span>
+            </div>
+            <div class="stat-value-row">
+                <strong id="stat-rate">0%</strong>
+                <div class="mini-chart purple-chart" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+            </div>
+            <div class="stat-bottom"><span>ATTACK RATIO</span><b>MODEL</b></div>
+        </article>
+
+    </section>
+
+    <!-- MAIN DATA -->
+    <section class="main-grid">
+
+        <!-- LIVE TRAFFIC -->
+        <article class="panel traffic-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <div class="panel-icon blue-icon">⌁</div>
+                    <div>
+                        <h2>Live Traffic Activity</h2>
+                        <p>Real-time network traffic analysis and classification</p>
+                    </div>
+                </div>
+
+                <div class="panel-tools">
+                    <div class="live-chip"><span></span>LIVE</div>
+                    <div class="record-chip" id="activity-count">0 records</div>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>TIME</th>
+                        <th>SOURCE IP</th>
+                        <th>DESTINATION IP</th>
+                        <th>PROTO</th>
+                        <th>SERVICE</th>
+                        <th>CATEGORY</th>
+                        <th>CONF.</th>
+                        <th>STATUS</th>
+                    </tr>
+                    </thead>
+                    <tbody id="activity-body">
+                    <tr><td colspan="9" class="empty-state">Waiting for network activity...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel-footer">
+                <span>LIVE DATA STREAM • NSL-KDD SIMULATION</span>
+                <span id="last-updated">SYNCING...</span>
+            </div>
+        </article>
+
+        <!-- ALERT FEED -->
+        <article class="panel alerts-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <div class="panel-icon red-icon">♧</div>
+                    <div>
+                        <h2>Alert Feed</h2>
+                        <p>Latest detected malicious activities</p>
+                    </div>
+                </div>
+                <div class="alert-count" id="alert-count">0 alerts</div>
+            </div>
+
+            <div id="alert-list" class="alert-list">
+                <div class="empty-state">No alerts yet — start monitoring to begin analysis.</div>
+            </div>
+
+            <div class="alert-footer">
+                <span class="pulse-dot"></span>
+                DETECTION ENGINE ACTIVE
+            </div>
+        </article>
+    </section>
+
+    <!-- GRAPH + SYSTEM -->
+    <section class="bottom-grid">
+
+        <article class="panel activity-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <div class="panel-icon blue-icon">▥</div>
+                    <div>
+                        <h2>Network Activity Pulse</h2>
+                        <p>Live traffic intensity from the detection stream</p>
+                    </div>
+                </div>
+                <div class="legend">
+                    <span><i class="normal-dot"></i>Normal</span>
+                    <span><i class="warning-dot"></i>Suspicious</span>
+                    <span><i class="attack-dot"></i>Attack</span>
+                </div>
+            </div>
+
+            <div class="chart-area">
+                <div class="chart-grid"></div>
+                <!-- Existing dashboard.js dynamically inserts pulse bars here -->
+                <div id="pulse-strip" class="pulse-strip"></div>
+            </div>
+        </article>
+
+        <article class="panel system-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <div class="panel-icon purple-icon">⚙</div>
+                    <div>
+                        <h2>System Information</h2>
+                        <p>Current detection environment</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-grid">
+                <div class="system-item">
+                    <div class="system-item-icon blue-bg">▣</div>
+                    <div><small>DATASET</small><strong>NSL-KDD</strong></div>
+                </div>
+                <div class="system-item">
+                    <div class="system-item-icon purple-bg">▣</div>
+                    <div><small>ML ALGORITHM</small><strong>Random Forest</strong></div>
+                </div>
+                <div class="system-item">
+                    <div class="system-item-icon green-bg">◇</div>
+                    <div><small>CLASSES</small><strong>Normal, DoS, Probe, R2L, U2R</strong></div>
+                </div>
+                <div class="system-item">
+                    <div class="system-item-icon cyan-bg">&lt;/&gt;</div>
+                    <div><small>FRAMEWORK</small><strong>Python, Flask</strong></div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <footer class="footer">
+        <span>AI-NIDS • MACHINE LEARNING BASED NETWORK SECURITY</span>
+        <span>B.TECH CSE — DATA SCIENCE • PRACTICAL NO. 10</span>
+    </footer>
+</main>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+<!-- Date/time is browser-live; no backend change required -->
+<script>
+(function () {
+    const dateEl = document.getElementById("current-date");
+    const timeEl = document.getElementById("current-time");
+
+    function updateClock() {
+        const now = new Date();
+
+        dateEl.textContent = now.toLocaleDateString("en-IN", {
+            weekday: "short",
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+
+        timeEl.textContent = now.toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+        });
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+})();
+</script>
+
+</body>
+</html>
