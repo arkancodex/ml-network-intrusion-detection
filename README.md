@@ -43,14 +43,11 @@ activity.
 
 ------------------------------------------------------------------------
 
-## 👥 Team
-
-    Sr. No. Student              Roll No.
-  --------- ------------------ ----------
-          1 **Arkan Shaikh**           54
-          2 **Ammar Shaikh**           53
-          3 **Pratik Yadav**           66
-
+## 👥 Team:
+Student name      Roll no 
+1. Arkan Shaikh   54
+2. Ammar Shaikh   53
+3. Pratik Yadav   66
 **Department:** Computer Science and Engineering --- Data Science\
 **Subject:** Employability Enhancement Program-IV (Data Security Lab)
 
