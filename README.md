@@ -1,6 +1,6 @@
-# AI-NIDS --- Network Intrusion Detection System
+# AI-NIDS  Network Intrusion Detection System
 
-> **Practical No. 10 --- Data Security Lab**\
+> **Practical No. 10 -Data Security Lab**\
 > **Machine Learning Based Intrusion Detection System**
 
 A Python and Flask based Network Intrusion Detection System (NIDS) that
@@ -50,7 +50,7 @@ Student name      Roll no
 3. Pratik Yadav   66
 
 
-**Department:** Computer Science and Engineering --- Data Science\
+**Department:** Computer Science and Engineering - Data Science\
 **Subject:** Employability Enhancement Program-IV (Data Security Lab)
 
 ------------------------------------------------------------------------
